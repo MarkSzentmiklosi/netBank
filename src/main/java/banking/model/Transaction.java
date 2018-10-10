@@ -15,4 +15,12 @@ public class Transaction {
         this.amount = amount;
         this.balanceAfterTransaction = balanceAfterTransaction;
     }
+
+    public TransactionType getTransactionType() {
+        return transactionType;
+    }
+
+    public Date getDateOfTransaction() {
+        return dateOfTransaction;
+    }
 }
