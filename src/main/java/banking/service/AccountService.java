@@ -4,11 +4,13 @@ import banking.model.BankAccount;
 import banking.model.Transaction;
 import banking.model.TransactionType;
 import banking.service.interfaces.FilteringHistory;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class AccountService implements FilteringHistory {
 
     public void printTransactionHistory(BankAccount account){
