@@ -4,10 +4,10 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class Transaction {
-    TransactionType transactionType;
-    Date dateOfTransaction;
-    BigDecimal amount;
-    BigDecimal balanceAfterTransaction;
+    private TransactionType transactionType;
+    private Date dateOfTransaction;
+    private BigDecimal amount;
+    private BigDecimal balanceAfterTransaction;
 
     public Transaction(TransactionType transactionType, Date dateOfTransaction, BigDecimal amount, BigDecimal balanceAfterTransaction) {
         this.transactionType = transactionType;
