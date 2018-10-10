@@ -12,12 +12,15 @@ import static org.junit.jupiter.api.Assertions.*;
 class TransactionServiceTest {
 
     private BankAccount bankAccount;
+    private BankAccount transferTo;
     private TransactionService transactionService = new TransactionService();
 
     @BeforeEach
     void setup() {
         bankAccount = new BankAccount();
         bankAccount.setBalance(new BigDecimal(500));
+        transferTo = new BankAccount();
+        transferTo.setBalance(new BigDecimal(200));
     }
 
     @Test
@@ -44,10 +47,32 @@ class TransactionServiceTest {
     }
 
     @Test
-    void withdraw_subctractsAmountFromBalance() {
+    void withdraw_SubctractsAmountFromBalance() {
         BigDecimal balanceBeforeTransaction = bankAccount.getBalance();
         BigDecimal amount = new BigDecimal(300.45123);
         transactionService.withdraw(amount, bankAccount);
         assertEquals(balanceBeforeTransaction.subtract(amount), bankAccount.getBalance());
+    }
+
+    @Test
+    void transfer_ThrowsException_IfAmountExceedsBalanceOfSender() {
+        assertThrows(IllegalArgumentException.class, () ->
+                transactionService.transfer(bankAccount.getBalance().add(new BigDecimal(200.88)), bankAccount, transferTo));
+    }
+
+    @Test
+    void transfer_SubctractsAmountFromTheBalanceOfSender() {
+        BigDecimal balanceBeforeTransaction = bankAccount.getBalance();
+        BigDecimal amount = new BigDecimal(100);
+        transactionService.transfer(amount, bankAccount, transferTo);
+        assertEquals(balanceBeforeTransaction.subtract(amount), bankAccount.getBalance());
+    }
+
+    @Test
+    void transfer_AmountAppearsOnTheBalanceOfReceiver() {
+        BigDecimal balanceBeforeTransaction = transferTo.getBalance();
+        BigDecimal amount = new BigDecimal(100);
+        transactionService.transfer(amount, bankAccount, transferTo);
+        assertEquals(balanceBeforeTransaction.add(amount), transferTo.getBalance());
     }
 }
