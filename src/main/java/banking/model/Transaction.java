@@ -8,4 +8,11 @@ public class Transaction {
     Date dateOfTransaction;
     BigDecimal amount;
     BigDecimal balanceAfterTransaction;
+
+    public Transaction(TransactionType transactionType, Date dateOfTransaction, BigDecimal amount, BigDecimal balanceAfterTransaction) {
+        this.transactionType = transactionType;
+        this.dateOfTransaction = dateOfTransaction;
+        this.amount = amount;
+        this.balanceAfterTransaction = balanceAfterTransaction;
+    }
 }
