@@ -20,8 +20,15 @@ public class TransactionService implements BasicTransactions {
         account.setTransactionHistory(updatedTransactionHistory);
     }
 
-    public void withdrawal(BigDecimal amount, BankAccount account) {
+    public void withdraw(BigDecimal amount, BankAccount account) {
+        if (amount.compareTo(BigDecimal.ZERO) <= 0)
+            throw new IllegalArgumentException("Invalid amount");
+        else if ((account.getBalance().subtract(amount)).compareTo(BigDecimal.ZERO) <= 0)
+            throw new IllegalArgumentException("Transaction amount exceeds available balance");
 
+        account.setBalance(account.getBalance().subtract(amount));
+        List<Transaction> updatedTransactionHistory = addNewTransaction(account, TransactionType.WITHDRAWAL, amount);
+        account.setTransactionHistory(updatedTransactionHistory);
     }
 
     public void transfer(BigDecimal amount, BankAccount FromAccount, BankAccount ToAccount) {
