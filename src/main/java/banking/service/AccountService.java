@@ -3,12 +3,13 @@ package banking.service;
 import banking.model.BankAccount;
 import banking.model.Transaction;
 import banking.model.TransactionType;
+import banking.service.interfaces.FilteringHistory;
 
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class AccountService implements FilteringHistory{
+public class AccountService implements FilteringHistory {
 
     public void printTransactionHistory(BankAccount account){
         account.getTransactionHistory().stream()

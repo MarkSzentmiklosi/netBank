@@ -1,4 +1,4 @@
-package banking.service;
+package banking.service.interfaces;
 
 import banking.model.BankAccount;
 
