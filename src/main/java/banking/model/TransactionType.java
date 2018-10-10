@@ -3,5 +3,6 @@ package banking.model;
 public enum TransactionType {
     DEPOSIT,
     WITHDRAWAL,
-    TRANSFER
+    TRANSFER_FROM,
+    TRANSFER_TO
 }
