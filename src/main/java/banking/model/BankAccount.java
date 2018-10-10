@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BankAccount<T> {
+public class BankAccount {
 
     private static long nextId = 1;
 
