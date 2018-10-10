@@ -9,9 +9,9 @@ public class BankAccount {
 
     private static long nextId = 1;
 
-    long accountID;
-    BigDecimal balance;
-    List<Transaction> transactionHistory;
+    private long accountID;
+    private BigDecimal balance;
+    private List<Transaction> transactionHistory;
 
     {
         balance = BigDecimal.ZERO;
@@ -22,20 +22,8 @@ public class BankAccount {
     public BankAccount() {
     }
 
-    public static long getNextId() {
-        return nextId;
-    }
-
-    public static void setNextId(long nextId) {
-        BankAccount.nextId = nextId;
-    }
-
     public long getAccountID() {
         return accountID;
-    }
-
-    public void setAccountID(long accountID) {
-        this.accountID = accountID;
     }
 
     public BigDecimal getBalance() {
