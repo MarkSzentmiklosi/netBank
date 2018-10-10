@@ -24,6 +24,9 @@ public class AccountService implements FilteringHistory{
 
     @Override
     public List<Transaction> getTransactionsByDate(BankAccount account, Date since, Date until) {
-        return null;
+        return account.getTransactionHistory().stream()
+                .filter(transaction -> transaction.getDateOfTransaction().after(since))
+                .filter(transaction -> transaction.getDateOfTransaction().before(until))
+                .collect(Collectors.toList());
     }
 }
