@@ -23,4 +23,14 @@ public class Transaction {
     public Date getDateOfTransaction() {
         return dateOfTransaction;
     }
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "transactionType=" + transactionType +
+                ", dateOfTransaction=" + dateOfTransaction +
+                ", amount=" + amount +
+                ", balanceAfterTransaction=" + balanceAfterTransaction +
+                '}';
+    }
 }
