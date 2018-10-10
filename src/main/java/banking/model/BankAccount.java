@@ -1,22 +1,27 @@
 package banking.model;
 
 
+import org.springframework.boot.autoconfigure.web.ResourceProperties;
+
+import javax.annotation.Generated;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class BankAccount {
 
-    private static long nextId = 1;
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long accountID;
     private BigDecimal balance;
+    @OneToMany(mappedBy="bankAccount")
     private List<Transaction> transactionHistory;
 
     {
         balance = BigDecimal.ZERO;
         transactionHistory = new ArrayList<Transaction>();
-        accountID = nextId++;
     }
 
     public BankAccount() {
