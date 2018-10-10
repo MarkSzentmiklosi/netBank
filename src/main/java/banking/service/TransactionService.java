@@ -11,7 +11,7 @@ import java.util.List;
 public class TransactionService implements BasicTransactions {
 
     public void deposit(BigDecimal amount, BankAccount account) {
-        if (amount.compareTo(BigDecimal.ZERO) == -1 || amount.compareTo(BigDecimal.ZERO) == 0)
+        if (amount.compareTo(BigDecimal.ZERO) <= 0)
             throw new IllegalArgumentException("Invalid amount");
 
         account.setBalance(account.getBalance().add(amount));
