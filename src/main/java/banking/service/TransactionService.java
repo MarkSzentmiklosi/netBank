@@ -35,10 +35,10 @@ public class TransactionService implements BasicTransactions {
             throw new IllegalArgumentException("Transaction amount exceeds available balance");
 
         senderAccount.setBalance(senderAccount.getBalance().subtract(amount));
-        addNewTransactionToHistory(senderAccount,TransactionType.TRANSFER_FROM,amount);
+        addNewTransactionToHistory(senderAccount,TransactionType.TRANSFER_OUT,amount);
 
         receiverAccount.setBalance(receiverAccount.getBalance().add(amount));
-        addNewTransactionToHistory(receiverAccount,TransactionType.TRANSFER_TO,amount);
+        addNewTransactionToHistory(receiverAccount,TransactionType.TRANSFER_IN,amount);
     }
 
     private List<Transaction> addNewTransactionToHistory(BankAccount account, TransactionType transactionType, BigDecimal amount) {
