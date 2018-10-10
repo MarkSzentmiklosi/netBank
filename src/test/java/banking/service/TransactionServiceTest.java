@@ -32,4 +32,22 @@ class TransactionServiceTest {
         transactionService.deposit(transactionAmount, bankAccount);
         assertEquals(balanceBeforeTransaction.add(transactionAmount), bankAccount.getBalance());
     }
+
+    @Test
+    void withdraw_ThrowsException_IfAmountIsEqualOrLessThanZero() {
+        assertThrows(IllegalArgumentException.class, () -> transactionService.withdraw(new BigDecimal(-130), bankAccount));
+    }
+
+    @Test
+    void withdraw_ThrowsException_IfAmountExceedsBalance() {
+        assertThrows(IllegalArgumentException.class, () -> transactionService.withdraw(bankAccount.getBalance().add(new BigDecimal(200)), bankAccount));
+    }
+
+    @Test
+    void withdraw_subctractsAmountFromBalance() {
+        BigDecimal balanceBeforeTransaction = bankAccount.getBalance();
+        BigDecimal amount = new BigDecimal(300.45123);
+        transactionService.withdraw(amount, bankAccount);
+        assertEquals(balanceBeforeTransaction.subtract(amount), bankAccount.getBalance());
+    }
 }
