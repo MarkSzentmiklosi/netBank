@@ -4,11 +4,13 @@ import banking.model.BankAccount;
 import banking.model.Transaction;
 import banking.model.TransactionType;
 import banking.service.interfaces.BasicTransactions;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+@Service
 public class TransactionService implements BasicTransactions {
 
     public void deposit(BigDecimal amount, BankAccount account) {
@@ -44,7 +46,7 @@ public class TransactionService implements BasicTransactions {
 
     private List<Transaction> addNewTransactionToHistory(BankAccount account, TransactionType transactionType, BigDecimal amount) {
         List<Transaction> transactions = account.getTransactionHistory();
-        transactions.add(new Transaction(transactionType, new Date(), amount, account.getBalance()));
+        transactions.add(new Transaction(transactionType, new Date(), amount, account.getBalance(),account));
         return transactions;
     }
 
