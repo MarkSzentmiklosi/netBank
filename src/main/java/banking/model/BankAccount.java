@@ -1,9 +1,7 @@
 package banking.model;
 
+import org.hibernate.annotations.Cascade;
 
-import org.springframework.boot.autoconfigure.web.ResourceProperties;
-
-import javax.annotation.Generated;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -16,7 +14,8 @@ public class BankAccount {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long accountID;
     private BigDecimal balance;
-    @OneToMany(mappedBy="bankAccount")
+    @OneToMany(mappedBy = "bankAccount")
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private List<Transaction> transactionHistory;
 
     {
