@@ -3,7 +3,9 @@ package banking.service;
 import banking.model.BankAccount;
 import banking.model.Transaction;
 import banking.model.TransactionType;
+import banking.repository.BankAccountRepository;
 import banking.service.interfaces.BasicTransactions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -13,13 +15,19 @@ import java.util.List;
 @Service
 public class TransactionService implements BasicTransactions {
 
+    private BankAccountRepository bankAccountRepository;
+
+    @Autowired
+    public TransactionService(BankAccountRepository bankAccountRepository) {
+        this.bankAccountRepository = bankAccountRepository;
+    }
+
     public void deposit(BigDecimal amount, BankAccount account) {
         if (amount.compareTo(BigDecimal.ZERO) <= 0)
             throw new IllegalArgumentException("Invalid amount");
 
         account.setBalance(account.getBalance().add(amount));
-        List<Transaction> updatedTransactionHistory = addNewTransactionToHistory(account, TransactionType.DEPOSIT, amount);
-        account.setTransactionHistory(updatedTransactionHistory);
+        addNewTransactionToHistory(account, TransactionType.DEPOSIT, amount);
     }
 
     public void withdraw(BigDecimal amount, BankAccount account) {
@@ -29,8 +37,7 @@ public class TransactionService implements BasicTransactions {
             throw new IllegalArgumentException("Transaction amount exceeds available balance");
 
         account.setBalance(account.getBalance().subtract(amount));
-        List<Transaction> updatedTransactionHistory = addNewTransactionToHistory(account, TransactionType.WITHDRAWAL, amount);
-        account.setTransactionHistory(updatedTransactionHistory);
+        addNewTransactionToHistory(account, TransactionType.WITHDRAWAL, amount);
     }
 
     public void transfer(BigDecimal amount, BankAccount senderAccount, BankAccount receiverAccount) {
@@ -44,10 +51,11 @@ public class TransactionService implements BasicTransactions {
         addNewTransactionToHistory(receiverAccount,TransactionType.TRANSFER_IN,amount);
     }
 
-    private List<Transaction> addNewTransactionToHistory(BankAccount account, TransactionType transactionType, BigDecimal amount) {
+    private void addNewTransactionToHistory(BankAccount account, TransactionType transactionType, BigDecimal amount) {
         List<Transaction> transactions = account.getTransactionHistory();
         transactions.add(new Transaction(transactionType, new Date(), amount, account.getBalance(),account));
-        return transactions;
+        account.setTransactionHistory(transactions);
+        bankAccountRepository.save(account);
     }
 
     private boolean isTransactionExceedsTheBalance(BankAccount account, BigDecimal amount) {
